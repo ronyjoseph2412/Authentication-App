@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { Navbar } from "./Components/Navbar";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import { Signup } from "./Components/Signup";
+import { Login } from "./Components/Login";
+import { PersonalInfo } from "./Components/PersonalInfo";
+import { EditInfo } from "./Components/EditInfo";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [auth, setauth] = useState(null);
+  const [userdata, setuserdata] = useState({"name":"","email":"","photo":"","bio":"","phone":""});
+  const setdata = (user)=>{
+    setuserdata(user);
+  }
+  const fetchdata = ()=>{
+      return(userdata);
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    <BrowserRouter>
+    <Routes>
+        {/* <Route exact path = "/" element={<Navbar />} /> */}
+        <Route exact path = "/" element={<><Navbar name={userdata.name} photo={userdata.photo} /><PersonalInfo setdata={setdata} userdata = {userdata} /></>} />
+        <Route exact path = "/edit" element={<><Navbar /><EditInfo fetchdata = {fetchdata} /></>} />
+        <Route exact path = "/login" element={<Login setdata={setdata} setauth={setauth} />} />
+        <Route exact path = "/signup" element={<Signup />} />
+    </Routes>
+  </BrowserRouter>
+    // <>
+    // <Navbar />
+    // <Signup/>
+    // </>
   );
 }
 
