@@ -8,9 +8,7 @@ const fetchuser = require('../Middleware/fetchuser');
 
 const JWT_SECRET ='RONY%12@34#56$78'
 
-const client_id="3879819f9dd9bc224620";
-const client_secret ="7be63029860072aedb3f5d41a386f0fe11530ac2";
-const redirect_uri ="http://localhost:3000/github"
+
 
 // Create User using --> Manual Sign in 
 router.post('/createuser',[body(['email','Enter a valid Email']).isEmail(),body('password', 'Password must be of minimum 5 characters').isLength({ min: 5 })],async (req,res)=>{

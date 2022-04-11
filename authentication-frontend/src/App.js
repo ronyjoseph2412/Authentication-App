@@ -18,7 +18,7 @@ function App() {
   const fetchdata = ()=>{
     return(userdata);
   }
-  let client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  let client_id = "795036138117-hugj2ismoeil60kjpleafh4cja22uccv.apps.googleusercontent.com";
   
   return (
 
