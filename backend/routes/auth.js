@@ -8,7 +8,9 @@ const fetchuser = require('../Middleware/fetchuser');
 
 const JWT_SECRET ='RONY%12@34#56$78'
 
-
+const client_id="3879819f9dd9bc224620";
+const client_secret ="7be63029860072aedb3f5d41a386f0fe11530ac2";
+const redirect_uri ="http://localhost:3000/github"
 
 // Create User using --> Manual Sign in 
 router.post('/createuser',[body(['email','Enter a valid Email']).isEmail(),body('password', 'Password must be of minimum 5 characters').isLength({ min: 5 })],async (req,res)=>{
@@ -134,38 +136,36 @@ router.put('/edituser',fetchuser,async (req, res) => {
 });
 
 // ROUTE-5 Github Login 
+// router.get('/git',async (req,res)=>{
+    
+// })
 // router.post('/gituser',async (req,res)=>{
-//     try{
-//         let user = await User.findOne({ email: req.body.email });
-//         if (user) {
-//             return (res.status(400).json({ "error": "User already exists! Please enter a valid email-address." }))
-//         }
-//         // Securing the Password
-//         // Generating Salt to protect the password by hashing
-//         const salt = await bcrypt.genSalt(10);
-//         const secure_Pass = await bcrypt.hash(req.body.password,salt);
-//         let name = ""
-//         if(req.body.email != ""){
-//             name = (req.body.email.split("@"))[0]; 
-//             console.log(name);
-//         }
-//         // Creating User
-//         user  = await User.create({
-//             name:name,
-//             email:req.body.email,
-//             password:secure_Pass,
-//         });
-//         const data = {
-//             user:{
-//                 id:user.id
-//             }
-//         }
-//         const authToken = jwt.sign(data, JWT_SECRET);
-//         res.json({'authToken':authToken});
-//     }catch(err){
-//         console.error(err.message);
-//         res.status(500).json({ 'error': 'some error occured' });
-//     }
+//     const {code} = req.body;
+//     console.log(req.body)
+//     let data = {"client_id":client_id,"client_secret":client_secret,"code":code,"redirect_uri":redirect_uri}
+//     fetch(`https://github.com/login/oauth/access_token`, {
+//     method: "POST",
+//     body: data,
+//   })
+//     .then((response) => response.text())
+//     .then((paramsString) => {
+//       let params = new URLSearchParams(paramsString);
+//       const access_token = params.get("access_token");
+
+//       // Request to return data of a user that has been authenticated
+//       return fetch(`https://api.github.com/user`, {
+//         headers: {
+//           Authorization: `token ${access_token}`,
+//         },
+//       });
+//     })
+//     .then((response) => response.json())
+//     .then((response) => {
+//       return res.status(200).json(response);
+//     })
+//     .catch((error) => {
+//       return res.status(400).json(error);
+//     });
 // });
 
 

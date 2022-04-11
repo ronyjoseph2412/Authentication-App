@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 export const EditInfo = (props) => {
     const navigate = useNavigate();
@@ -41,7 +41,6 @@ export const EditInfo = (props) => {
             body:JSON.stringify({"name":name,"email":email,"bio":bio,"phone":phone,"photo":photo})
         });
         const json = await response.json();
-        console.log(json);
         navigate('/');
     }
     

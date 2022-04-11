@@ -15,10 +15,8 @@ export const PersonalInfo = (props) => {
               'authentication-token': localStorage.getItem('authentication-token')
 
           },
-          // body:JSON.stringify({email:user_data.email,password:user_data.password,photo:user_data.photo,name:user_data.name})
       });
       const json = await response1.json();
-      // console.log(json);
       props.setdata(json);
       }
     });

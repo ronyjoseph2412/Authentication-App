@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import GoogleLogin from 'react-google-login';
 import { Link, useNavigate } from 'react-router-dom'
-export const Login = (props) => {
+
+export const Login = (props) => {       
     let navigate = useNavigate();
     const [Credentials, setCredentials] = useState("");
     const [Credential, setCredential] = useState("");
@@ -11,11 +12,10 @@ export const Login = (props) => {
     const onChange = (e)=>{
         setCredential(e.target.value);
     }
-    const responseGoogle = (response) => {
-        console.log(response);
-      }
+    const responseGoogle = ()=>{
+        alert("Error Occured!")
+    }
     const redirectLogin = async (response) =>{
-        console.log(response);
         let user_data = {}
         if(response.profileObj){
             user_data.name = (response.profileObj).name;
@@ -37,10 +37,8 @@ export const Login = (props) => {
                 body:JSON.stringify({email:user_data.email,password:user_data.password,photo:user_data.photo,name:user_data.name})
             });
             const json = await response1.json();
-            console.log(json);
             if(!json.error){
                 localStorage.setItem('authentication-token',json.authToken);
-                console.log(json.authToken);
                 navigate("/")
             }
         }
@@ -57,10 +55,8 @@ export const Login = (props) => {
             body:JSON.stringify({email:Credentials,password:Credential})
         });
         const json = await response.json();
-        console.log(json);
         if(!json.error){
             localStorage.setItem('authentication-token',json.authToken);
-            console.log(json.authToken);
             const response1 = await fetch(`http://localhost:5000/api/auth/getuser`, {
             method: 'POST',
             headers: {
@@ -70,7 +66,6 @@ export const Login = (props) => {
             },
         });
         const json1 = await response1.json();
-        // console.log(json1);
         props.setdata(json1);
             navigate("/")
         }
@@ -79,7 +74,9 @@ export const Login = (props) => {
             alert("Incorrect Credentials");
         }
     }
-      
+
+    
+         
     return (
         <form onSubmit={handleSubmit}>
         <div className='grid grid-cols-1 lg:grid-cols-3 py-28 mx-4 md:mx-16 lg:mx-28'>
@@ -113,10 +110,9 @@ export const Login = (props) => {
                         or continue with these social profile
                     </div>
                     <div className='flex flex-row justify-center items-center space-x-5'>
-                    <GoogleLogin
-    clientId="795036138117-hugj2ismoeil60kjpleafh4cja22uccv.apps.googleusercontent.com"
+                    <GoogleLogin clientId={props.client_id}
     render={renderProps => (
-      <button onClick={renderProps.onClick} disabled={renderProps.disabled}><img src="/assets/Google.svg" alt="" /></button>
+      <button onClick={renderProps.onClick} disabled={renderProps.disabled}><img src="/assets/Google.svg" alt="" className='cursor-pointer' /></button>
     )}
     buttonText="Login"
     onSuccess={redirectLogin}
@@ -124,10 +120,6 @@ export const Login = (props) => {
     cookiePolicy={'single_host_origin'}
   />
                         
-
-                        {/* <img src="/assets/Facebook.svg" alt="" />
-                        <img src="/assets/Twitter.svg" alt="" /> */}
-                        <img src="/assets/Gihub.svg" alt="" />
                     </div>
                     <div className='text-sm space-x-2 text-center text-[#828282]'>
                         Don't have an account yet?<Link to='/signup' className='text-blue-700'>Signup!</Link>

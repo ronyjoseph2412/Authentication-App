@@ -1,11 +1,5 @@
 import React, { useState } from 'react'
-import GoogleLogin from 'react-google-login';
 import { Link, useNavigate } from 'react-router-dom';
-// 3879819f9dd9bc224620
-// import FacebookLogin from 'react-facebook-login';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
- 
-
 
 export const Signup = () => {
     const [credential_email, setcredential_email] = useState("")
@@ -28,15 +22,14 @@ export const Signup = () => {
             user_data.email = (response.profileObj).email;
             user_data.password = response.profileObj.googleId;
             user_data.photo = (response.profileObj).imageUrl;
-            // console.log(user_data);
+
             
         }
         navigate("/login")
     }
     const signup = async (e)=>{
         e.preventDefault();
-        // console.log(credential_email)
-        // console.log(credential_password)
+        
         const response1 = await fetch(`http://localhost:5000/api/auth/createuser`, {
                 method: 'POST',
                 headers: {
@@ -52,10 +45,6 @@ export const Signup = () => {
                 console.log(json.authToken);
                 navigate("/login")
             }
-    }
-    
-    const responseFacebook = (response) => {
-      console.log(response);
     }
     
     return (
@@ -89,36 +78,7 @@ export const Signup = () => {
                     <button className='bg-[#2F80ED] rounded text-[#FFFFFF] text-md font-semibold text-center pr-1 pl-1 pt-2 pb-2 cursor-pointer'>
                         Start coding now
                     </button>
-                    <div className='text-[#828282] text-sm text-center'>
-                    or continue with these social profile
-                    </div>
-                    <div className='flex flex-row justify-center items-center space-x-5'>
-                    <GoogleLogin
-    clientId="795036138117-hugj2ismoeil60kjpleafh4cja22uccv.apps.googleusercontent.com"
-    render={renderProps => (
-      <button onClick={renderProps.onClick} disabled={renderProps.disabled}><img src="/assets/Google.svg" alt="" /></button>
-    )}
-    buttonText="Login"
-    onSuccess={redirectLogin}
-    onFailure={responseGoogle}
-    cookiePolicy={'single_host_origin'}
-  />
-  {/* <FacebookLogin
-  appId="553035029779397"
-  autoLoad
-  callback={responseFacebook}
-  render={renderProps => (
-    <button onClick={renderProps.onClick}><img src="/assets/Facebook.svg" alt="" /></button>
-  )}
-/> */}
-                        
-                        {/* <img src="/assets/Twitter.svg" alt="" /> */}
-                        
-                        {/* <img src="/assets/Gihub.svg" alt="" /> */}
-
-    
-                        
-                    </div>
+                    
                     <div className='text-sm space-x-2 text-center text-[#828282]'>
                     Already a member? <Link to='/login' className='text-blue-700'>Login</Link>
                     </div>
